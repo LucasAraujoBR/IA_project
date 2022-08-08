@@ -4,7 +4,7 @@ import os
 def escreve_no_txt(name, content):
     cur_path = os.path.dirname(__file__)
     arquivo = open(
-        f"{cur_path}\\lyrics\\{name}.txt", "a"
+        f"{cur_path}\\lyrics\\{name}", "a"
     )
     texto = str(content)
     arquivo.writelines(texto + "\n")
@@ -14,7 +14,7 @@ def escreve_no_txt(name, content):
 def clear_txt(name):
     cur_path = os.path.dirname(__file__)
     f = open(
-        f"{cur_path}\\lyrics\\{name}.txt", "w"
+        f"{cur_path}\\lyrics\\{name}", "w"
     )
     f.close()
 
