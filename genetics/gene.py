@@ -7,7 +7,7 @@ from genetics.operator import Operator
 class Gene(metaclass=ABCMeta):
 
     @abstractmethod
-    def evaluate(self, gene_index, eval_matrix, data_matrix, constants, targets) -> float:
+    def evaluate(self, gene_index, eval_matrix, data_matrix, targets) -> float:
         raise NotImplementedError()
     
     @abstractmethod
@@ -29,9 +29,9 @@ class VariableGene(Gene):
         for example_index in range(0, num_examples):
             lyric_partition = list(data_matrix[example_index, 1])
             if self.is_feature:
-                lyric_partition.pop(self.index) 
+                pop_partition = lyric_partition.pop(self.index) 
             result = func_result(lyric_partition)  # Definirá o Gênero
-            eval_matrix[gene_index, example_index] = (lyric_partition, result)
+            eval_matrix[gene_index, example_index] = (list(pop_partition), result)
             sum_of_errors += comparacao_entre_generos(targets[example_index], result)
         return sum_of_errors
 
@@ -42,7 +42,7 @@ class VariableGene(Gene):
         if self.is_feature:
             return "FEATURES[{}]".format(self.index)
         else:
-            return "CONSTANTS[{}]".format(self.index)
+            return "NOT_FEATURES[{}]".format(self.index)
 
     def __repr__(self):
         return self.__str__()
@@ -59,7 +59,7 @@ class OperatorGene(Gene):
         self.address1 = address1
         self.address2 = address2
 
-    def evaluate(self, gene_index, eval_matrix, data_matrix, constants, targets) -> float:
+    def evaluate(self, gene_index, eval_matrix, data_matrix, targets) -> float:
         """
         Este método modificará o eval_matrix neste índice de gene para cada exemplo no data_matrix.
         """
@@ -68,10 +68,12 @@ class OperatorGene(Gene):
         sum_of_errors = 0.
         for example_index in range(0, num_examples):
             # Aplicando na Operação o valor contido no endereço passado
-            lyric_partition = self.operation(eval_matrix[self.address1][example_index],
-                                   eval_matrix[self.address2][example_index])
+            eval_address1 = eval_matrix[self.address1][example_index]
+            eval_address2 = eval_matrix[self.address2][example_index]
+            lyric_partition = self.operation(data_matrix[example_index][0], eval_address1, eval_address2)
+            pop_partition = eval_address1 + eval_address2
             result = func_result(lyric_partition)  # Definirá o Gênero
-            eval_matrix[gene_index, example_index] = (lyric_partition, result)
+            eval_matrix[gene_index, example_index] = (pop_partition, result)
             sum_of_errors += comparacao_entre_generos(targets[example_index], result)
         return sum_of_errors
 

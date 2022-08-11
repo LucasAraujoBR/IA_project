@@ -25,34 +25,3 @@ class Operator(metaclass=ABCMeta):
     
     def __repr__(self) -> str:
         return str(self)
-
-class removeTwoLessUsedWordsOperator(Operator):
-    def __call__(self, *args, **kwds):
-        lyric = str(args[0])
-        lyric = re.sub(',', '', lyric)
-        words = lyric.lower.split()
-        
-        return 
-    
-    def function_name(self):
-        return "Substituição de Char Especial"
-    
-    def function_python_definition(self):
-        return """
-def reSubEspecialChar(lyric):
-    return re.sub(r'\W', ' ', str(lyric))
-    """
-
-
-class reSubEspecialCharOperator(Operator):
-    def __call__(self, *args, **kwds):
-        return re.sub(r'\W', ' ', str(args[0]))
-    
-    def function_name(self):
-        return "Substituição de Char Especial"
-    
-    def function_python_definition(self):
-        return """
-def reSubEspecialChar(lyric):
-    return re.sub(r'\W', ' ', str(lyric))
-    """
