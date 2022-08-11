@@ -28,10 +28,37 @@ class Operator(metaclass=ABCMeta):
 
 class reSubEspecialCharOperator(Operator):
     def __call__(self, *args, **kwds):
-        return re.sub(r'\W', ' ', str(args[0]))
+        return data_pre_processing(args)
     
-    def function_name(self):
-        return "Substituição de Char Especial"
+    def data_pre_processing(X):
+        lyrics = []
+        
+        # Remove all the special characters
+        lyrics = re.sub(r'\W', ' ', str(X))
+            
+        # remove all single characters
+        lyrics = re.sub(r'\s+[a-zA-Z]\s+', ' ', lyrics)
+        
+        # Remove single characters from the start
+        lyrics = re.sub(r'\^[a-zA-Z]\s+', ' ', lyrics) 
+        
+        # Substituting multiple spaces with single space
+        lyrics = re.sub(r'\s+', ' ', lyrics, flags=re.I)
+        
+        # Removing prefixed 'b'
+        lyrics = re.sub(r'^b\s+', '', lyrics)
+        
+        # Converting to Lowercase
+        lyrics = lyrics.lower()
+        
+        # Lemmatization
+        lyrics = lyrics.split()
+
+        #lyrics = [stemmer.lemmatize(word) for word in lyrics]
+        lyrics_final = ' '.join(lyrics)
+        
+        lyrics.append(lyrics_final)
+        return lyrics
     
     def function_python_definition(self):
         return """
