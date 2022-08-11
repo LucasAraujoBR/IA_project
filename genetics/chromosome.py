@@ -1,7 +1,7 @@
 import numpy as np
 from collections import deque
-from genetics.gene import Gene, VariableGene, OperatorGene
-from genetics.operator import AdditionOperator, MultiplicationOperator, SubtractionOperator, DivisionOperator, MinOperator, MaxOperator
+from genetics.gene import VariableGene, OperatorGene
+from genetics.operator import *
 from random import random, randint, choice
 
 
