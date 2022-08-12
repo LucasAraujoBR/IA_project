@@ -3,7 +3,7 @@
   
     "population_size": 100,
     "code_length": 50,
-    "num_generations": 200,
+    "num_generations": 1,
   
     "mutation_probability": 0.1,
     "crossover_probability": 0.9,
@@ -11,7 +11,7 @@
     "feature_variables_probability": 0.4,
     "operators_probability": 0.5,
 
-    "number_of_partitions": 100,
+    "number_of_partitions": 10,
   
     "problem_type": "regression"
   }

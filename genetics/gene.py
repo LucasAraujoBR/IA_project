@@ -1,7 +1,6 @@
-from random import randint
+from resultado import funcao_resultado
 from typing import Union, Callable
 from abc import ABCMeta, abstractmethod
-
 from genetics.operator import Operator
 
 class Gene(metaclass=ABCMeta):
@@ -19,21 +18,26 @@ class VariableGene(Gene):
         self.index = index
         self.is_feature = is_feature
 
-    def evaluate(self, gene_index, eval_matrix, data_matrix, targets) -> float:
+    def evaluate(self, gene_index, eval_matrix, data_matrix, targets, trained) -> float:
         """
         Este método modificará o eval_matrix neste índice de gene para cada exemplo no data_matrix.
         """
 
         num_examples = eval_matrix.shape[1]
-        sum_of_errors = 0.
+        lyric_partition = []
+        pop_partitions = []
         for example_index in range(0, num_examples):
-            lyric_partition = list(data_matrix[example_index, 1])
+            pop_partition = [""]
+            letra = list(data_matrix[example_index, 0])
             if self.is_feature:
-                pop_partition = lyric_partition.pop(self.index) 
-            result = func_result(lyric_partition)  # Definirá o Gênero
-            eval_matrix[gene_index, example_index] = (list(pop_partition), result)
-            sum_of_errors += comparacao_entre_generos(targets[example_index], result)
-        return sum_of_errors
+                pop_partition.append(letra.pop(self.index))
+            pop_partitions.append(pop_partition)
+            lyric_partition.append(' '.join(letra))
+        result, acertos = funcao_resultado(lyric_partition, trained[0], trained[2], trained[1], trained[3])  # Definirá o Gênero
+
+        for example_index in range(0, num_examples):
+            eval_matrix[gene_index, example_index] = (pop_partition[example_index], result[example_index])
+        return 1 - acertos
 
     def __str__(self):
         return "VariableGene({}, is_feature={})".format(self.index, self.is_feature)
@@ -58,24 +62,34 @@ class OperatorGene(Gene):
         # Esse indice será para a eval_matrix e de acordo com as operações que criaremos nós n precisaremos de 2 endereços mas só de 1
         self.address1 = address1
         self.address2 = address2
+        
 
-    def evaluate(self, gene_index, eval_matrix, data_matrix, targets) -> float:
+    def evaluate(self, gene_index, eval_matrix, data_matrix, targets, trained) -> float:
         """
         Este método modificará o eval_matrix neste índice de gene para cada exemplo no data_matrix.
         """
 
         num_examples = eval_matrix.shape[1]
-        sum_of_errors = 0.
+        lyric_partition = []
+        pop_partitions = []
         for example_index in range(0, num_examples):
             # Aplicando na Operação o valor contido no endereço passado
             eval_address1 = eval_matrix[self.address1][example_index]
             eval_address2 = eval_matrix[self.address2][example_index]
-            lyric_partition = self.operation(data_matrix[example_index][0], eval_address1, eval_address2)
-            pop_partition = eval_address1 + eval_address2
-            result = func_result(lyric_partition)  # Definirá o Gênero
-            eval_matrix[gene_index, example_index] = (pop_partition, result)
-            sum_of_errors += comparacao_entre_generos(targets[example_index], result)
-        return sum_of_errors
+            letra = list(data_matrix['lyric'][example_index])
+            pop_partition = [""]
+            for i in range(len(eval_address1[0])):
+                if letra.count(eval_address1[i]):
+                    pop_partition.append(letra.pop(eval_address1[i]))
+            for i in range(len(eval_address2[0])):
+                if letra.count(eval_address1[i]):
+                    pop_partition.append(letra.pop(eval_address1[i]))
+            pop_partitions.append(pop_partition)
+            lyric_partition.append(self.operation(' '.join(letra)))
+        result, acertos = funcao_resultado(lyric_partition, trained[0], trained[2], trained[1], trained[3])  # Definirá o Gênero
+        for example_index in range(0, num_examples):
+            eval_matrix[gene_index, example_index] = (pop_partition[example_index], result[example_index])
+        return 1 - acertos 
 
     def __str__(self):
         return "OperatorGene({}, {}, {})".format(self.operation, self.address1, self.address2)

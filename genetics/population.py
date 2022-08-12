@@ -1,7 +1,7 @@
 from genetics.chromosome import Chromosome
 import random
 import copy
-
+from treino import treina_maquina
 
 class Population:
     def __init__(self, data_matrix, targets, feature_variable_prob, num_genes, num_chromosomes, operators_prob):
@@ -10,7 +10,7 @@ class Population:
         self.targets = targets
         self.constants_prob = 1. - operators_prob - feature_variable_prob
         self.feature_variable_prob = feature_variable_prob
-        self.num_feature_variables = len(self.data_matrix['lyric'][0])  # Tem de ter a mesma quantidade de termos dentro de cada lista
+        self.num_feature_variables = len(self.data_matrix[0, 0])  # Tem de ter a mesma quantidade de termos dentro de cada lista
         self.num_genes = num_genes
         self.num_chromosomes = num_chromosomes
         self.operators_prob = operators_prob
@@ -22,6 +22,8 @@ class Population:
         # the chromosomes
         self.chromosomes = None
 
+        self.trained = treina_maquina()
+
     def initialize(self):
         self.chromosomes = [Chromosome.generate_random_chromosome(self.constants_prob,
                                                                   self.feature_variable_prob,
@@ -30,7 +32,7 @@ class Population:
                             for _ in range(self.num_chromosomes)]
         
         for chromosome in self.chromosomes:
-            chromosome.evaluate(self.data_matrix, self.targets)
+            chromosome.evaluate(self.data_matrix, self.targets, self.trained)
         
         self.chromosomes.sort()
 
