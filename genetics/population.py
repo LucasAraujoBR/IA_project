@@ -4,17 +4,13 @@ import copy
 
 
 class Population:
-    def __init__(self, data_matrix, targets, num_constants, constants_min, constants_max,
-                 feature_variable_prob, num_genes, num_chromosomes, operators_prob):
+    def __init__(self, data_matrix, targets, feature_variable_prob, num_genes, num_chromosomes, operators_prob):
         # set the variables
         self.data_matrix = data_matrix
         self.targets = targets
-        self.num_constants = num_constants
-        self.constants_min = constants_min
-        self.constants_max = constants_max
         self.constants_prob = 1. - operators_prob - feature_variable_prob
         self.feature_variable_prob = feature_variable_prob
-        self.num_feature_variables = len(self.data_matrix[0])  # Tem de ter a mesma quantidade de termos dentro de cada lista
+        self.num_feature_variables = len(self.data_matrix['lyric'][0])  # Tem de ter a mesma quantidade de termos dentro de cada lista
         self.num_genes = num_genes
         self.num_chromosomes = num_chromosomes
         self.operators_prob = operators_prob

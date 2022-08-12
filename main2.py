@@ -13,11 +13,11 @@ if __name__ == "__main__":
     # get the data file
     data_set_name = args.data_set_name
     python_file_name = args.python_file_name
-    data_set = DataSet(data_set_name)
-
+ 
     with open("mep/config/config.json") as config_file:
         config = json.load(config_file)
 
+    data_set = DataSet(data_set_name, config["number_of_partitions"])
 
     model = MEPModel(int(config["num_constants"]), float(config["constants_min"]), float(config["constants_max"]),
                      float(config["feature_variables_probability"]), int(config["code_length"]),
