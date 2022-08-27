@@ -1,13 +1,13 @@
 import numpy as np
 from collections import deque
 from genetics.gene import VariableGene, OperatorGene
-from genetics.operator import *
+from genetics.operator import func1, func2, func3, func4, func5
 from random import random, randint, choice
 
 
 class Chromosome:
     # valid operators
-    operators_family = [operadores]
+    operators_family = [func1, func2, func3, func4, func5]
 
     def __init__(self, genes):
         self.genes = genes
@@ -32,7 +32,7 @@ class Chromosome:
         # construct and return the chromosome
         return Chromosome(genes)
 
-    def evaluate(self, data_matrix, targets):
+    def evaluate(self, data_matrix, targets, trained):
         # Quantidade de músicas
         num_examples = data_matrix.shape[0]
         
@@ -41,7 +41,7 @@ class Chromosome:
         #(linha)
         eval_matrix = np.zeros((len(self.genes), num_examples))
         for gene_index, gene in enumerate(self.genes):
-            error = gene.evaluate(gene_index, eval_matrix, data_matrix, targets)
+            error = gene.evaluate(gene_index, eval_matrix, data_matrix, targets, trained)
             if error < self.error:
                 self.error = error
                 self.best_gene_index = gene_index
@@ -108,6 +108,7 @@ class Chromosome:
     def to_python(self):
         python_program = """
 import sys
+import re
 
 # define operator/functions
 {}

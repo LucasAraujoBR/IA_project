@@ -3,13 +3,9 @@ from genetics.population import Population
 
 
 class MEPModel:
-    def __init__(self, num_constants: int, constants_min: float, constants_max: float,
-                 feature_variables_probability: float, code_length: int, population_size: int,
+    def __init__(self, feature_variables_probability: float, code_length: int, population_size: int,
                  operators_probability: float, num_generations: int):
 
-        self.num_constants = num_constants
-        self.constants_min = constants_min
-        self.constants_max = constants_max
         self.feature_variables_probability = feature_variables_probability
         self.code_length = code_length
         self.population_size = population_size
@@ -19,9 +15,7 @@ class MEPModel:
         self.best_chromosome = None
 
     def fit(self, X: np.ndarray, y: np.ndarray):
-        population = Population(X, y, self.num_constants,
-                                self.constants_min, self.constants_max,
-                                self.feature_variables_probability,
+        population = Population(X, y, self.feature_variables_probability,
                                 self.code_length, self.population_size,
                                 self.operators_probability)
 

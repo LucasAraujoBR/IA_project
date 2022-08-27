@@ -16,4 +16,9 @@ def funcao_resultado(func,lyric_train,label_train,lyric_test,label_test):
     #predição 
     predictions = pipelineSVC.predict(lyric_test)
     print(classification_report(label_test,predictions))
+<<<<<<< HEAD
     return accuracy_score(label_test,predictions)
+=======
+    
+    return predictions, accuracy_score(label_test, predictions)
+>>>>>>> e2a1a78f60c8bc53b6830b148bb7e61899374016
