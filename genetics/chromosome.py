@@ -18,21 +18,17 @@ class Chromosome:
     def generate_random_chromosome(cls, constants_prob, feature_variable_prob, num_variables, num_genes, operators_prob):
         genes = []
         sum_prob = constants_prob + feature_variable_prob
-        if random() * sum_prob <= feature_variable_prob:
-            genes.append(VariableGene(randint(0, num_variables - 1), is_feature=True))
-        else:
-            genes.append(VariableGene(randint(0, num_variables - 1), is_feature=False))
+
+        genes.append(VariableGene(randint(0, num_variables - 1), is_feature= random() * sum_prob <= feature_variable_prob))
+        genes.append(VariableGene(randint(0, num_variables - 1), is_feature= random() * sum_prob <= feature_variable_prob))
         
-        for gene_index in range(1, num_genes):
+        for gene_index in range(2, num_genes):
             prob = random()
             if prob <= operators_prob:
                 genes.append(OperatorGene(choice(Chromosome.operators_family)(),
                                           randint(0, gene_index - 1), randint(0, gene_index - 1)))
-            elif prob <= operators_prob + feature_variable_prob:
-                genes.append(VariableGene(randint(0, num_variables - 1), is_feature=True))
             else:
-                genes.append(VariableGene(randint(0, num_variables - 1), is_feature=False))
-
+                genes.append(VariableGene(randint(0, num_variables - 1), is_feature= prob <= operators_prob + feature_variable_prob))
         # construct and return the chromosome
         return Chromosome(genes)
 
@@ -69,13 +65,11 @@ class Chromosome:
                 self.genes[gene_index] = random_chromosome.genes[gene_index]
 
     def __str__(self):
-        return "Chromosome({}, {})".format(self.genes, self.constants)
+        return "Chromosome({})".format(self.genes)
 
     def pretty_string(self, stop_at_best=True):
-        program = "CONSTANTS = [{}]\n".format(",".join([str(c) for c in self.constants]))
-
         for gene_index, gene in enumerate(self.genes):
-            program += "{}:{}\n".format(gene_index, gene.pretty_string())
+            program += "{}:{}\n".format(gene_index, gene.pretty_string())  ####
             if self.best_gene_index == gene_index and stop_at_best:
                 return program
 

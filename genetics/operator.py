@@ -25,6 +25,7 @@ class Operator(metaclass=ABCMeta):
     
     def __repr__(self) -> str:
         return str(self)
+<<<<<<< HEAD
 
 class removeTwoLessUsedWordsOperator(Operator):
     def __call__(self, *args, **kwds):
@@ -83,3 +84,5 @@ class reSubEspecialCharOperator(Operator):
 def reSubEspecialChar(lyric):
     return re.sub(r'\W', ' ', str(lyric))
     """
+=======
+>>>>>>> b731fc2a3620acb923f769d1e30e7277d9235953

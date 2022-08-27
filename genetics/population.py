@@ -14,7 +14,7 @@ class Population:
         self.constants_max = constants_max
         self.constants_prob = 1. - operators_prob - feature_variable_prob
         self.feature_variable_prob = feature_variable_prob
-        self.num_feature_variables = self.data_matrix.shape[1]
+        self.num_feature_variables = len(self.data_matrix[0])  # Tem de ter a mesma quantidade de termos dentro de cada lista
         self.num_genes = num_genes
         self.num_chromosomes = num_chromosomes
         self.operators_prob = operators_prob
@@ -27,8 +27,7 @@ class Population:
         self.chromosomes = None
 
     def initialize(self):
-        self.chromosomes = [Chromosome.generate_random_chromosome(self.num_constants, self.constants_min,
-                                                                  self.constants_max, self.constants_prob,
+        self.chromosomes = [Chromosome.generate_random_chromosome(self.constants_prob,
                                                                   self.feature_variable_prob,
                                                                   self.num_feature_variables, self.num_genes,
                                                                   self.operators_prob)

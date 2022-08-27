@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from nltk.corpus import stopwords
 import string
+from sklearn.svm import SVC
 
 
 def processamento_texto(txt):
@@ -25,10 +26,10 @@ gospel = pd.read_csv('dataset/gospel.csv')
 sertanejo = pd.read_csv('dataset/sertanejo.csv')
 
 #Atribuir colunas a generos
-bossa['label'] = 0
-funk['label'] = 1
-gospel['label'] = 2
-sertanejo['label'] = 3
+bossa['Genero'] = 'Bossa Nova'
+funk['Genero'] = 'Funk'
+gospel['Genero'] = 'Gospel'
+sertanejo['Genero'] = 'Sertanejo'
 
 #lista de datasets
 datasets = [bossa,funk,gospel,sertanejo]
