@@ -11,6 +11,9 @@
       <li>Data base: https://www.kaggle.com/datasets/juicobowley/drake-lyrics (drake data)</li>
     </ul>
   <li>Pre-processamento</li>
+    <ul>
+      <li>pre_process.py</li>
+    </ul>
   <li>Extração de caracteristicas</li>
   <li>Base de dados</li>
   <li>Módulo de reconhecimento</li>
