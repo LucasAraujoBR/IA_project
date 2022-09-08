@@ -4,12 +4,21 @@
 <ul>
   <li>Aquisição de dados</li>
     <ul>
-      <li>Data base: https://www.kaggle.com/datasets/paultimothymooney/poetry?resource=download (Funk, Gospel, Sertanejo, Bossa nova)</li>
-      <li>Data base: https://www.kaggle.com/datasets/mcarujo/bossa-nova-lyrics (Bossa nova songs dataset)</li>
-      <li>Data base: https://www.kaggle.com/datasets/elizzyliu/song-lyrics (Rock country R&B)</li>
-      <li>Data base: https://www.kaggle.com/datasets/paradisejoy/top-hits-spotify-from-20002019 (songs normalize)</li>
-      <li>Data base: https://www.kaggle.com/datasets/juicobowley/drake-lyrics (drake data)</li>
-    </ul>
+      <li>Link dos datasets
+
+Samba: https://www.kaggle.com/datasets/clovesgtx/brazilian-music-samba-lyrics
+
+Gospel: https://raw.githubusercontent.com/damarals/letras/master/inst/csv/letras.csv
+
+Axe: https://www.kaggle.com/datasets/jorgefjr/brazilian-songs-lyrics
+
+Funk: https://www.kaggle.com/datasets/sleshes/funk-carioca-dataset
+
+Bossa Nova: https://www.kaggle.com/datasets/mcarujo/bossa-nova-lyrics
+
+Rock,Sertanejo, Samba2 = https://github.com/gabriellmd/data-frames-nlp</li>
+</ul>
+
   <li>Pre-processamento</li>
     <ul>
       <li>pre_process.py</li>
